@@ -202,7 +202,7 @@ function renderProducts() {
         <div class="product-name">${escapeHtml(p.name)}</div>
         <div class="product-desc">${escapeHtml(p.desc || '')}</div>
         <div class="product-price">${fmt(p.price)}</div>
-        <button class="btn btn-gold" onclick="event.stopPropagation(); addToCart('${p.id}')">🛒 Savatga qo'shish</button>
+        <button class="btn btn-gold" onclick="event.stopPropagation(); addToCart('${p.id}')"> Savatga qo'shish</button>
       </div>
     </div>
   `).join("");
