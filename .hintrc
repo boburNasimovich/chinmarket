@@ -5,6 +5,7 @@
   "hints": {
     "button-type": "off",
     "no-inline-styles": "off",
-    "disown-opener": "off"
+    "disown-opener": "off",
+    "meta-viewport": "off"
   }
 }
