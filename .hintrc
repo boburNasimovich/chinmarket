@@ -6,6 +6,20 @@
     "button-type": "off",
     "no-inline-styles": "off",
     "disown-opener": "off",
-    "meta-viewport": "off"
+    "meta-viewport": "off",
+    "compat-api/html": [
+      "default",
+      {
+        "ignore": [
+          "iframe[referrerpolicy=no-referrer-when-downgrade]"
+        ]
+      }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "frame-title": "off"
+      }
+    ]
   }
 }

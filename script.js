@@ -200,7 +200,6 @@ function renderProducts() {
       </div>
       <div class="product-body">
         <div class="product-name">${escapeHtml(p.name)}</div>
-        <div class="product-desc">${escapeHtml(p.desc || '')}</div>
         <div class="product-price">${fmt(p.price)}</div>
         <button class="btn btn-gold" onclick="event.stopPropagation(); addToCart('${p.id}')"> Savatga qo'shish</button>
       </div>
@@ -287,7 +286,18 @@ function openCart() { renderCart(); openModal("cartModal"); }
 /* ===== CHECKOUT ===== */
 function openCheckout() {
   const cart = DB.cart();
-  if (cart.length === 0) { toast("Savatcha bo'sh", "error"); return; }
+  if (cart.length === 0) { 
+    toast("Savatcha bo'sh", "error"); 
+    return; 
+  }
+  
+  // Eng kam buyurtma miqdori tekshiruvi (50,000 so'm)
+  const minAmount = 50000;
+  if (cartTotal() < minAmount) {
+    toast(`Eng kam buyurtma miqdori ${fmt(minAmount)} bo'lishi kerak!`, "error");
+    return;
+  }
+
   const user = DB.currentUser();
   if (!user) {
     closeModal("cartModal");
@@ -295,6 +305,7 @@ function openCheckout() {
     toast("Iltimos, avval tizimga kiring", "error");
     return;
   }
+  
   document.getElementById("coName").value = user.name;
   document.getElementById("coPhone").value = user.phone;
   document.getElementById("checkoutSummary").innerHTML =
@@ -381,17 +392,27 @@ function renderAdminProducts() {
   const t = document.getElementById("adminProductsTable");
   const items = DB.products();
   t.innerHTML = `
-    <thead><tr><th>Rasm</th><th>Nomi</th><th>Kategoriya</th><th>Narx</th><th>Amal</th></tr></thead>
+    <thead>
+      <tr>
+        <th style="width: 80px;">Rasm</th>
+        <th>Nomi</th>
+        <th>Kategoriya</th>
+        <th>Narx</th>
+        <th style="width: 180px; text-align: center;">Amal</th>
+      </tr>
+    </thead>
     <tbody>${items.length === 0 ? `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">Mahsulot yo'q</td></tr>` :
       items.map(p => `
         <tr>
-          <td>${p.image ? `<img class="thumb" src="${escapeAttr(p.image)}" onerror="this.style.display='none'">` : '📦'}</td>
+          <td>${p.image ? `<img class="thumb" src="${escapeAttr(p.image)}" onerror="this.style.display='none'; this.parentElement.innerHTML='📦';" style="width:50px; height:50px; object-fit:cover; border-radius:6px;">` : '📦'}</td>
           <td><b>${escapeHtml(p.name)}</b></td>
-          <td>${escapeHtml(p.category)}</td>
+          <td><span class="badge">${escapeHtml(p.category)}</span></td>
           <td>${fmt(p.price)}</td>
-          <td class="row-actions">
-            <button class="btn btn-ghost sm" onclick="editProduct('${p.id}')">✎ Tahrir</button>
-            <button class="btn btn-danger sm" onclick="deleteProduct('${p.id}')">🗑 O'chirish</button>
+          <td style="text-align: center;">
+            <div style="display: flex; gap: 6px; justify-content: center;">
+              <button class="btn btn-ghost sm" onclick="editProduct('${p.id}')" style="padding: 4px 8px; font-size: 13px;">✎ Tahrir</button>
+              <button class="btn btn-danger sm" onclick="deleteProduct('${p.id}')" style="padding: 4px 8px; font-size: 13px;">🗑 O'chirish</button>
+            </div>
           </td>
         </tr>
       `).join("")}
@@ -423,13 +444,16 @@ function renderAdminOrders() {
     return;
   }
   box.innerHTML = items.map(o => `
-    <div class="order-card">
+    <div class="order-card" style="position: relative;">
       <div class="order-head">
         <div>
           <h4>${escapeHtml(o.userName)}</h4>
           <small>📞 ${escapeHtml(o.userPhone)} • 📍 ${escapeHtml(o.address)}</small>
         </div>
-        <div class="order-total">${fmt(o.total)}</div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+          <div class="order-total">${fmt(o.total)}</div>
+          <button class="btn btn-danger sm" onclick="deleteOrder('${o.id}')" style="padding: 4px 8px; font-size: 12px;">🗑 O'chirish</button>
+        </div>
       </div>
       <div class="order-items">
         ${o.items.map(i => `<div><span>${escapeHtml(i.name)} × ${i.qty}</span><span>${fmt(i.price * i.qty)}</span></div>`).join("")}
@@ -555,3 +579,14 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+/* ===== BUYURTMANI O'CHIRISH ===== */
+function deleteOrder(id) {
+  if (!confirm("Ushbu buyurtmani o'chirishni tasdiqlaysizmi?")) return;
+  
+  const updatedOrders = DB.orders().filter(o => o.id !== id);
+  DB.saveOrders(updatedOrders);
+  
+  // Real-time tinglovchi (on value) ishlayotgani sababli renderAdmin() avtomatik chaqiriladi,
+  // lekin vizual ishonch uchun xabar beramiz
+  toast("Buyurtma muvaffaqiyatli o'chirildi", "success");
+}

@@ -56,13 +56,16 @@ a {
 }
 
 button {
-  font-family: inherit;
+  font-family: 'Inter', system-ui, sans-serif;
   cursor: pointer;
   border: none;
   background: none;
   color: inherit
 }
-
+iframe{
+  width: 100%;
+  height: 100%;
+}
 input,
 select,
 textarea {
@@ -318,10 +321,6 @@ img {
 }
 
 /* ===== HERO ===== */
-.hero {
-  padding: 30px 0 60px
-}
-
 .hero-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -1313,7 +1312,7 @@ img {
   }
 
   .hero-visual {
-    height: 380px
+    height: auto;
   }
 
   .features {
@@ -1342,6 +1341,10 @@ img {
 }
 
 @media (max-width:520px) {
+  iframe{
+    width: 100%;
+    height: 200px;
+  }
   .container {
     padding: 0 16px
   }
@@ -1425,4 +1428,15 @@ img {
   .pd-price {
     font-size: 24px
   }
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.btn-danger:hover {
+  background-color: #bd2130;
 }

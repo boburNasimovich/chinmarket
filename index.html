@@ -1,311 +1,343 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><title>MARKET chinabad — Premium Onlayn Do'kon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MARKET chinabad — Premium Onlayn Do'kon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="container nav-inner">
-    <div class="logo" onclick="showPage('home')">
-      <span class="logo-text">E-MARKET chinabad</span>
-    </div>
-    <nav class="nav-links">
-      <a onclick="showPage('home')">Bosh sahifa</a>
-      <a onclick="showPage('shop')">Do'kon</a>
-      <a onclick="openAdminLogin()">Admin</a>
-    </nav>
-    <div class="nav-actions">
-      <button class="icon-btn cart-btn" onclick="openCart()">
-        🛒 <span class="cart-count" id="cartCount">0</span>
-      </button>
-      <div id="userArea"></div>
-    </div>
-  </div>
-</header>
-
-<!-- TOAST -->
-<div id="toastBox" class="toast-box"></div>
-
-<!-- HOME PAGE -->
-<section id="page-home" class="page active">
-  <div class="hero">
-    <div class="container hero-grid">
-      <div class="hero-text">
-        <span class="badge-line">✦ Premium kolleksiya 2026</span>
-        <h1>Eng ishonchli <br> tanlovlar  <br> uyingizga.</h1>
-        <p>Elektronika, kiyim va aksessuarlardan iborat saralangan mahsulotlar. Tezkor yetkazib berish, kafolatlangan sifat.</p>
-        <div class="hero-actions">
-          <button class="btn btn-gold" onclick="showPage('shop')">Xaridni boshlash →</button>
-          <button class="btn btn-ghost" onclick="showPage('shop')">Kolleksiyani ko'rish</button>
-        </div>
-        <div class="hero-stats">
-          <div><b id="statProducts">0</b><span>Mahsulot</span></div>
-          <div><b id="statUsers">0</b><span>Mijoz</span></div>
-          <div><b id="statOrders">0</b><span>Buyurtma</span></div>
-        </div>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo" onclick="showPage('home')">
+        <span class="logo-text">E-MARKET chinabad</span>
       </div>
-      <div class="hero-visual">
-        <div class="orb"></div>
-        <div class="card-stack">
-          <div class="hero-card c1">⌚<br><small>Premium soat</small></div>
-          <div class="hero-card c2">🎧<br><small>Pro audio</small></div>
-          <div class="hero-card c3">👜<br><small>Designer</small></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container features">
-    <div class="feat"><span>🚚</span><b>Tez yetkazish</b><p>1-3 ish soati ichida</p></div>
-    <div class="feat"><span>🛡️</span><b>Kafolat</b><p>Original mahsulotlar</p></div>
-    <div class="feat"><span>💳</span><b>Xavfsiz to'lov</b><p>Karta yoki naqd</p></div>
-    <div class="feat"><span>⭐</span><b>Premium servis</b><p>24/7 yordam</p></div>
-  </div>
-</section>
-
-<!-- SHOP PAGE -->
-<section id="page-shop" class="page">
-  <div class="container">
-    <div class="shop-head">
-      <div>
-        <h2 class="section-title">Bizning kolleksiya</h2>
-        <p class="muted">Saralangan mahsulotlar — sizning didingiz uchun</p>
-      </div>
-      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Mahsulot qidirish..." oninput="renderProducts()" />
-    </div>
-    <div class="chips" id="categoryChips"></div>
-    <div class="product-grid" id="productGrid"></div>
-  </div>
-</section>
-
-<!-- ADMIN PAGE -->
-<section id="page-admin" class="page">
-  <div class="container">
-    <div class="admin-head">
-      <h2 class="section-title">⚙️ Admin Panel</h2>
-      <button class="btn btn-ghost" onclick="logoutAdmin()">Chiqish</button>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card"><span>📦</span><div><b id="aProducts">0</b><p>Jami mahsulot</p></div></div>
-      <div class="stat-card"><span>👥</span><div><b id="aUsers">0</b><p>Ro'yxatdagi mijoz</p></div></div>
-      <div class="stat-card"><span>🧾</span><div><b id="aOrders">0</b><p>Buyurtmalar</p></div></div>
-      <div class="stat-card"><span>💰</span><div><b id="aRevenue">0</b><p>Umumiy savdo (so'm)</p></div></div>
-    </div>
-
-    <div class="admin-tabs">
-      <button class="tab-btn active" onclick="switchTab(event,'tab-products')">Mahsulotlar</button>
-      <button class="tab-btn" onclick="switchTab(event,'tab-add')">+ Mahsulot qo'shish</button>
-      <button class="tab-btn" onclick="switchTab(event,'tab-users')">Mijozlar</button>
-      <button class="tab-btn" onclick="switchTab(event,'tab-orders')">Buyurtmalar</button>
-    </div>
-
-    <div id="tab-products" class="tab-pane active">
-      <div class="table-wrap">
-        <table class="data-table" id="adminProductsTable"></table>
-      </div>
-    </div>
-
-    <div id="tab-add" class="tab-pane">
-      <form id="productForm" class="form-card" onsubmit="saveProduct(event)">
-        <input type="hidden" id="productId" />
-        <div class="form-row">
-          <label>Mahsulot nomi
-            <input type="text" id="pName" required placeholder="Masalan: AirPods Pro" />
-          </label>
-          <label>Narxi (so'm)
-            <input type="number" id="pPrice" required min="0" placeholder="1500000" />
-          </label>
-        </div>
-        <div class="form-row">
-          <label>Kategoriya
-            <select id="pCategory" required>
-              <option value="Elektronika">Elektronika</option>
-              <option value="Kiyim">Kiyim</option>
-              <option value="Aksessuarlar">Aksessuarlar</option>
-              <option value="Boshqa">Boshqa</option>
-            </select>
-          </label>
-          <label>Rasm (URL)
-            <input type="url" id="pImageUrl" placeholder="https://..." />
-          </label>
-        </div>
-        <label>Yoki qurilmadan rasm tanlang
-          <input type="file" id="pImageFile" accept="image/*" onchange="previewImage(event)" />
-        </label>
-        <div id="imagePreview" class="image-preview"></div>
-        <label>Tavsif
-          <textarea id="pDesc" rows="3" placeholder="Mahsulot haqida qisqacha..."></textarea>
-        </label>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-gold">Saqlash</button>
-          <button type="button" class="btn btn-ghost" onclick="resetProductForm()">Tozalash</button>
-        </div>
-      </form>
-    </div>
-
-    <div id="tab-users" class="tab-pane">
-      <div class="table-wrap">
-        <table class="data-table" id="adminUsersTable"></table>
-      </div>
-    </div>
-
-    <div id="tab-orders" class="tab-pane">
-      <div id="ordersList" class="orders-list"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== MODALS ===== -->
-
-<!-- Cart Modal -->
-<div class="modal" id="cartModal">
-  <div class="modal-content">
-    <div class="modal-head">
-      <h3>🛒 Savatcha</h3>
-      <button class="x-btn" onclick="closeModal('cartModal')">×</button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-foot">
-      <div class="cart-total">Jami: <b id="cartTotal">0 so'm</b></div>
-      <div class="cart-actions">
-        <button class="btn btn-ghost" onclick="clearCart()">Tozalash</button>
-        <button class="btn btn-gold" onclick="openCheckout()">Buyurtma berish →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Auth Modal -->
-<div class="modal" id="authModal">
-  <div class="modal-content small">
-    <div class="modal-head">
-      <h3>👤 Tizimga kirish</h3>
-      <button class="x-btn" onclick="closeModal('authModal')">×</button>
-    </div>
-    <p class="muted">Xarid qilish uchun ro'yxatdan o'ting</p>
-    <form onsubmit="handleAuth(event)">
-      <label>Ism-familiya
-        <input type="text" id="authName" required minlength="2" placeholder="Ali Valiyev" />
-      </label>
-      <label>Telefon raqam
-        <input type="tel" id="authPhone" required placeholder="+998901234567" />
-      </label>
-      <button type="submit" class="btn btn-gold full">Davom etish</button>
-    </form>
-  </div>
-</div>
-
-<!-- Checkout Modal -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-content">
-    <div class="modal-head">
-      <h3>🧾 Buyurtmani tasdiqlash</h3>
-      <button class="x-btn" onclick="closeModal('checkoutModal')">×</button>
-    </div>
-    <form onsubmit="submitOrder(event)">
-      <div class="form-row">
-        <label>Ism
-          <input type="text" id="coName" required readonly />
-        </label>
-        <label>Telefon
-          <input type="tel" id="coPhone" required readonly />
-        </label>
-      </div>
-      <label>Yetkazib berish manzili
-        <input type="text" id="coAddress" required placeholder="Shahar, ko'cha, uy" />
-      </label>
-      <label>Izoh (ixtiyoriy)
-        <textarea id="coNote" rows="2" placeholder="Qo'shimcha ko'rsatmalar..."></textarea>
-      </label>
-      <div class="checkout-summary" id="checkoutSummary"></div>
-      <button type="submit" class="btn btn-gold full" id="orderBtn">Buyurtmani yuborish</button>
-    </form>
-  </div>
-</div>
-
-<!-- Admin Login Modal -->
-<div class="modal" id="adminLoginModal">
-  <div class="modal-content small">
-    <div class="modal-head">
-      <h3>🔐 Admin kirish</h3>
-      <button class="x-btn" onclick="closeModal('adminLoginModal')">×</button>
-    </div>
-    <form onsubmit="loginAdmin(event)">
-      <label>Parol
-        <input type="password" id="adminPass" required placeholder="••••••••" />
-      </label>
-      <button type="submit" class="btn btn-gold full">Kirish</button>
-    </form>
-  </div>
-</div>
-
-<!-- Product Detail Modal -->
-<div class="modal" id="productDetailModal">
-  <div class="modal-content product-detail">
-    <div class="modal-head">
-      <h3>Mahsulot haqida</h3>
-      <button class="x-btn" onclick="closeModal('productDetailModal')">×</button>
-    </div>
-    <div class="pd-grid">
-      <div class="pd-visual">
-        <img id="pdImage" src="" alt="" onerror="this.style.display='none'; document.getElementById('pdImageFallback').style.display='flex';">
-        <div id="pdImageFallback" class="pd-fallback" style="display:none;">📦</div>
-      </div>
-      <div class="pd-info">
-        <span class="pd-category" id="pdCategory">Kategoriya</span>
-        <h2 class="pd-name" id="pdName">Nomi</h2>
-        <div class="pd-price" id="pdPrice">0 so'm</div>
-        <p class="pd-desc" id="pdDesc">Tavsif</p>
-        <button class="btn btn-gold full" id="pdAddBtn">🛒 Savatga qo'shish</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo" style="margin-bottom:14px;">
-          <span class="logo-text">MARKET chinabad</span>
-        </div>
-        <p>Premium mahsulotlar va xizmatlar. Sifat, ishonch va zamonaviylik — bizning tamoyilimiz.</p>
-      </div>
-      <div class="footer-links">
-        <b>Havolalar</b>
+      <nav class="nav-links">
         <a onclick="showPage('home')">Bosh sahifa</a>
         <a onclick="showPage('shop')">Do'kon</a>
         <a onclick="openAdminLogin()">Admin</a>
-      </div>
-      <div class="footer-links">
-        <b>Aloqa</b>
-        <span>📞 +998 20 000 44 89</span>
-        <span>✉️ boburnasimovich@gmail.com</span>
-        <span>📍 Baliqchi, Chinabad</span>
-      </div>
-      <div class="footer-links">
-        <b>Ijtimoiy tarmoqlar</b>
-        <a href="https://instagram.com/@_.nsmvc" target="_blank">Instagram</a>
-        <a href="https://t.me/optom_pamperslar" target="_blank">Telegram</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn cart-btn" onclick="openCart()">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <div id="userArea"></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 <b>MARKET </b>chinabad — created by <a style="text-decoration: underline;" target="_blank" href="https://boburnasimovich.uz">Bobur Nasimovich</a></p>
+  </header>
+
+  <!-- TOAST -->
+  <div id="toastBox" class="toast-box"></div>
+
+  <!-- HOME PAGE -->
+  <section id="page-home" class="page active">
+    <div class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="badge-line">✦ Premium kolleksiya 2025</span>
+          <h1>Eng ishonchli <br> tanlovlar <br> uyingizga.</h1>
+          <p>Tezkor yetkazib berish, kafolatlangan
+            sifat.</p>
+          <div class="hero-actions">
+            <button class="btn btn-gold" onclick="showPage('shop')">Xaridni boshlash →</button>
+            <button class="btn btn-ghost" onclick="showPage('shop')">D`konni ko`rish</button>
+          </div>
+          <div class="hero-stats">
+            <div><b id="statProducts">0</b><span>Mahsulot</span></div>
+            <div><b id="statUsers">0</b><span>Mijoz</span></div>
+            <div><b id="statOrders">0</b><span>Buyurtma</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9039.507954613115!2d71.969172293902!3d40.881250041723696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2s!4v1780996038681!5m2!1sru!2s"
+             style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="container features">
+      <div class="feat"><span>🚚</span><b>Tez yetkazish</b>
+        <p>1-3 ish soati ichida</p>
+      </div>
+      <div class="feat"><span>🛡️</span><b>Kafolat</b>
+        <p>Original mahsulotlar</p>
+      </div>
+      <div class="feat"><span>💳</span><b>Xavfsiz to'lov</b>
+        <p>Karta yoki naqd</p>
+      </div>
+      <div class="feat"><span>⭐</span><b>Premium servis</b>
+        <p>24/7 yordam</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP PAGE -->
+  <section id="page-shop" class="page">
+    <div class="container">
+      <div class="shop-head">
+        <div>
+          <h2 class="section-title">Bizning kolleksiya</h2>
+          <p class="muted">100% ishonchli original mahsulotlar</p>
+        </div>
+        <input type="text" id="searchInput" class="search-input" placeholder=" Mahsulot qidirish..."
+          oninput="renderProducts()" />
+      </div>
+      <div class="chips" id="categoryChips"></div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ADMIN PAGE -->
+  <section id="page-admin" class="page">
+    <div class="container">
+      <div class="admin-head">
+        <h2 class="section-title">⚙️ Admin Panel</h2>
+        <button class="btn btn-ghost" onclick="logoutAdmin()">Chiqish</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><span>📦</span>
+          <div><b id="aProducts">0</b>
+            <p>Jami mahsulot</p>
+          </div>
+        </div>
+        <div class="stat-card"><span>👥</span>
+          <div><b id="aUsers">0</b>
+            <p>Ro'yxatdagi mijoz</p>
+          </div>
+        </div>
+        <div class="stat-card"><span>🧾</span>
+          <div><b id="aOrders">0</b>
+            <p>Buyurtmalar</p>
+          </div>
+        </div>
+        <div class="stat-card"><span>💰</span>
+          <div><b id="aRevenue">0</b>
+            <p>Umumiy savdo (so'm)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="tab-btn active" onclick="switchTab(event,'tab-products')">Mahsulotlar</button>
+        <button class="tab-btn" onclick="switchTab(event,'tab-add')">+ Mahsulot qo'shish</button>
+        <button class="tab-btn" onclick="switchTab(event,'tab-users')">Mijozlar</button>
+        <button class="tab-btn" onclick="switchTab(event,'tab-orders')">Buyurtmalar</button>
+      </div>
+
+      <div id="tab-products" class="tab-pane active">
+        <div class="table-wrap">
+          <table class="data-table" id="adminProductsTable"></table>
+        </div>
+      </div>
+
+      <div id="tab-add" class="tab-pane">
+        <form id="productForm" class="form-card" onsubmit="saveProduct(event)">
+          <input type="hidden" id="productId" />
+          <div class="form-row">
+            <label>Mahsulot nomi
+              <input type="text" id="pName" required placeholder="Masalan: AirPods Pro" />
+            </label>
+            <label>Narxi (so'm)
+              <input type="number" id="pPrice" required min="0" placeholder="1500000" />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Kategoriya
+              <select id="pCategory" required>
+                <option value="Elektronika">Elektronika</option>
+                <option value="Kiyim">Kiyim</option>
+                <option value="Aksessuarlar">Aksessuarlar</option>
+                <option value="Boshqa">Boshqa</option>
+              </select>
+            </label>
+            <label>Rasm (URL)
+              <input type="url" id="pImageUrl" placeholder="https://..." />
+            </label>
+          </div>
+          <label>Yoki qurilmadan rasm tanlang
+            <input type="file" id="pImageFile" accept="image/*" onchange="previewImage(event)" />
+          </label>
+          <div id="imagePreview" class="image-preview"></div>
+          <label>Tavsif
+            <textarea id="pDesc" rows="3" placeholder="Mahsulot haqida qisqacha..."></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-gold">Saqlash</button>
+            <button type="button" class="btn btn-ghost" onclick="resetProductForm()">Tozalash</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="tab-users" class="tab-pane">
+        <div class="table-wrap">
+          <table class="data-table" id="adminUsersTable"></table>
+        </div>
+      </div>
+
+      <div id="tab-orders" class="tab-pane">
+        <div id="ordersList" class="orders-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- Cart Modal -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3>Savatcha</h3>
+        <button class="x-btn" onclick="closeModal('cartModal')">×</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-foot">
+        <div class="cart-total">Jami: <b id="cartTotal">0 so'm</b></div>
+        <div class="cart-actions">
+          <button class="btn btn-ghost" onclick="clearCart()">Tozalash</button>
+          <button class="btn btn-gold" onclick="openCheckout()">Buyurtma berish →</button>
+        </div>
+      </div>
     </div>
   </div>
-</footer>
 
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content small">
+      <div class="modal-head">
+        <h3>👤 Tizimga kirish</h3>
+        <button class="x-btn" onclick="closeModal('authModal')">×</button>
+      </div>
+      <p class="muted">Xarid qilish uchun ro'yxatdan o'ting</p>
+      <form onsubmit="handleAuth(event)">
+        <label>Ism-familiya
+          <input type="text" id="authName" required minlength="2" placeholder="Ali Valiyev" />
+        </label>
+        <label>Telefon raqam
+          <input type="tel" id="authPhone" required placeholder="+998901234567" />
+        </label>
+        <button type="submit" class="btn btn-gold full">Davom etish</button>
+      </form>
+    </div>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3>🧾 Buyurtmani tasdiqlash</h3>
+        <button class="x-btn" onclick="closeModal('checkoutModal')">×</button>
+      </div>
+      <form onsubmit="submitOrder(event)">
+        <div class="form-row">
+          <label>Ism
+            <input type="text" id="coName" required readonly />
+          </label>
+          <label>Telefon
+            <input type="tel" id="coPhone" required readonly />
+          </label>
+        </div>
+        <label>Yetkazib berish manzili
+          <input type="text" id="coAddress" required placeholder="Shahar, ko'cha, uy" />
+        </label>
+        <label>Izoh (ixtiyoriy)
+          <textarea id="coNote" rows="2" placeholder="Qo'shimcha ko'rsatmalar..."></textarea>
+        </label>
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <button type="submit" class="btn btn-gold full" id="orderBtn">Buyurtmani yuborish</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div class="modal" id="adminLoginModal">
+    <div class="modal-content small">
+      <div class="modal-head">
+        <h3>🔐 Admin kirish</h3>
+        <button class="x-btn" onclick="closeModal('adminLoginModal')">×</button>
+      </div>
+      <form onsubmit="loginAdmin(event)">
+        <label>Parol
+          <input type="password" id="adminPass" required placeholder="••••••••" />
+        </label>
+        <button type="submit" class="btn btn-gold full">Kirish</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal" id="productDetailModal">
+    <div class="modal-content product-detail">
+      <div class="modal-head">
+        <h3>Mahsulot haqida</h3>
+        <button class="x-btn" onclick="closeModal('productDetailModal')">×</button>
+      </div>
+      <div class="pd-grid">
+        <div class="pd-visual">
+          <img id="pdImage" src="" alt=""
+            onerror="this.style.display='none'; document.getElementById('pdImageFallback').style.display='flex';">
+          <div id="pdImageFallback" class="pd-fallback" style="display:none;">📦</div>
+        </div>
+        <div class="pd-info">
+          <span class="pd-category" id="pdCategory">Kategoriya</span>
+          <h2 class="pd-name" id="pdName">Nomi</h2>
+          <div class="pd-price" id="pdPrice">0 so'm</div>
+          <p class="pd-desc" id="pdDesc">Tavsif</p>
+          <button class="btn btn-gold full" id="pdAddBtn">Savatga qo'shish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo" style="margin-bottom:14px;">
+            <span class="logo-text">MARKET chinabad</span>
+          </div>
+          <p>Premium mahsulotlar va xizmatlar. Sifat, ishonch va zamonaviylik — bizning tamoyilimiz.</p>
+        </div>
+        <div class="footer-links">
+          <b>Havolalar</b>
+          <a onclick="showPage('home')">Bosh sahifa</a>
+          <a onclick="showPage('shop')">Do'kon</a>
+          <a onclick="openAdminLogin()">Admin</a>
+        </div>
+        <div class="footer-links">
+          <b>Aloqa</b>
+          <span>📞 +998 20 000 44 89</span>
+          <span>✉️ boburnasimovich@gmail.com</span>
+          <span>📍 Baliqchi, Chinabad</span>
+        </div>
+        <div class="footer-links">
+          <b>Ijtimoiy tarmoqlar</b>
+          <a href="https://instagram.com/@_.nsmvc" target="_blank">Instagram</a>
+          <a href="https://t.me/optom_pamperslar" target="_blank">Telegram</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 <b>MARKET </b>chinabad — created by <a style="text-decoration: underline;" target="_blank"
+            href="https://boburnasimovich.uz">Bobur Nasimovich</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
