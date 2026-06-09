@@ -7,7 +7,7 @@
    LUXE Store — Vanilla JS E-commerce (Firebase Edition)
    =========================================================== */
 
-const TG_BOT_TOKEN = "8213253823:AAESS8i7BT3nyRRed96wZtQRxeIZz2hyV28";
+const TG_BOT_TOKEN = "8213253823:AAFAUtZQn98hlNQCJ5BJg0RM6l3iKOeXMXU";
 const TG_CHAT_ID   = "6411305064";
 const ADMIN_PASSWORD = "0777";
 
