@@ -1114,7 +1114,7 @@ img {
 /* ===== TOAST ===== */
 .toast-box {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   z-index: 200;
   display: flex;
